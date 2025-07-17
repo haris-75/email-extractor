@@ -1,10 +1,20 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import HttpUrl
 import requests
 from bs4 import BeautifulSoup
 import re
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[  "https://email-extractor-ui.vercel.app/",
+    "http://localhost:3000"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def extract_emails_from_url(url: str):
     try:
